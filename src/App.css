@@ -1,0 +1,23 @@
+.home-card{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  height: 200px;
+  box-shadow: 15px 15px 30px ;
+  border-radius: 30px;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+.card-img{
+  width: 100px;
+  height: 200px;
+  object-fit: cover ;
+}
