@@ -3,19 +3,17 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
-import translationEn from '../locale/translateEn';
 import translationUz from '../locale/translateUz';
 import Header from './Header/Header';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
+import translationEn from '../locale/translateEn';
 i18n
   .use(initReactI18next) 
   .init({
     resources: {
-      en: {
-        translation: translationEn
-      },
-      uz: {translation: translationUz}
+      uz: {translation: translationUz},
+      en: {translation: translationEn },
     },
     lng: "uz", 
     fallbackLng: "uz",
@@ -38,7 +36,7 @@ function App() {
   } , [])
   return (
     <>
-    <Navbar/>
+    <Navbar changeLang={changeLang}/>
        {/* <Header changeLang={changeLang} /> */}
     < div className='home-card' >
     {
