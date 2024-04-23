@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import './Button.css'
-    const Button = ({changeLang}) => {
+import './Header.css'
+    const Header = ({changeLang}) => {
         const changeLangHandler = (e) =>{
             changeLang(e.target.value)
           }
@@ -20,4 +20,4 @@ import './Button.css'
       )
     }
     
-    export default Button
+    export default Header

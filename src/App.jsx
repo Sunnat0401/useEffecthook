@@ -1,11 +1,13 @@
 
 import { useEffect, useState } from 'react'
 import './App.css'
-import Button from './Button/Button'
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import translationEn from '../locale/translateEn';
 import translationUz from '../locale/translateUz';
+import Header from './Header/Header';
+import Navbar from './Navbar/Navbar';
+import Footer from './Footer/Footer';
 i18n
   .use(initReactI18next) 
   .init({
@@ -36,7 +38,8 @@ function App() {
   } , [])
   return (
     <>
-       <Button changeLang={changeLang} />
+    <Navbar/>
+       {/* <Header changeLang={changeLang} /> */}
     < div className='home-card' >
     {
     data.map((element , i)=>(
@@ -49,6 +52,7 @@ function App() {
     ))
     }
  </div>
+ <Footer/>
  </>
 
   )
