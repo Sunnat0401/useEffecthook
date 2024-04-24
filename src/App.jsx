@@ -1,6 +1,5 @@
-
-import { useEffect, useState } from 'react'
-import './App.css'
+import { useEffect, useState } from 'react';
+import './App.css';
 import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import translationUz from '../locale/translateUz';
@@ -8,93 +7,63 @@ import Header from './Header/Header';
 import Navbar from './Navbar/Navbar';
 import Footer from './Footer/Footer';
 import translationEn from '../locale/translateEn';
+
 i18n
-  .use(initReactI18next) 
+  .use(initReactI18next)
   .init({
     resources: {
-      uz: {translation: translationUz},
-      en: {translation: translationEn },
+      uz: { translation: translationUz },
+      en: { translation: translationEn },
     },
-    lng: "uz", 
+    lng: "uz",
     fallbackLng: "uz",
-
     interpolation: {
-      escapeValue: false 
+      escapeValue: false
     }
   });
+
 function App() {
-  const changeLang = (value) =>{
-    i18n.changeLanguage(value)
-  }
+  const changeLang = (value) => {
+    i18n.changeLanguage(value);
+  };
+
   const { t } = useTranslation();
-  const [data, setData] = useState([])
-  useEffect(()=>{
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
     fetch("https://api.autozoomrental.com/api/categories")
-    .then((res)=>res.json())
-    // .then(items) =>console.log(items?data)
-    .then((items) =>setData(items?.data))
-  } , [])
+      .then((res) => res.json())
+      .then((items) => {
+        setData(items?.data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
+  }, []);
+  console.log(i18n);
   return (
     <>
-    <Navbar changeLang={changeLang}/>
-       {/* <Header changeLang={changeLang} /> */}
-    < div className='home-card' >
-    {
-    data.map((element , i)=>(
-      // console.log(element)
-     <div key={i} className='card'>
-       <img className='card-img' src={`https://api.autozoomrental.com/api/uploads/images/${element?.image_src}`} alt="dfsfds" />
-       <h5 className='card-title'>{element?.name_en}</h5>
-       <p className='card-subtitle'>{element?.name_ru}</p>
-     </div>
-    ))
-    }
- </div>
- <Footer/>
- </>
-
-  )
+      <Navbar changeLang={changeLang} />
+      <div className='home-card'>
+        {loading ? (
+          <p>{t('loading')}</p>
+        ) : (
+          data.map((element, i) => (
+            <div key={i} className='card'>
+              <img className='card-img' src={`https://api.autozoomrental.com/api/uploads/images/${element?.image_src}`} alt={element?.name_en || element?.name_ru} />
+              <h5 className='card-title'>
+                {i18n.language === 'en' ? element?.name_en : element?.name_ru}
+              </h5>
+            </div>
+          ))
+        )}
+      </div>
+      <Footer />
+    </>
+  );
 }
 
-export default App
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// data.map((element , i)=>(
-//   <div key={i} className='card'>
-//     <img className='card-img' src={`https://api.autozoomrental.com/api/uploads/images/${element?.image_src}`} alt="dfsfds" />
-//     <h5 className='card-title'>{element?.title}</h5>
-//   </div>
+export default App;
